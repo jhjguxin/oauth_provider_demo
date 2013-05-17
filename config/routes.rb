@@ -9,6 +9,11 @@ OauthProviderDemo::Application.routes.draw do
       resources :users
       get '/me' => "credentials#me"
       get '/fast' => 'fast#index'
+
+      match "messages/read"
+      match "messages/send_message"
+      match "messages/delete_session"
+      match "messages/deletemessage"
     end
   end
 

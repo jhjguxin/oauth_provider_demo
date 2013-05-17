@@ -130,8 +130,8 @@ Then in the console:
     access.get('/api/v1/fast').parsed
     access.get('/api/v1/users').parsed
 
-    access.get('/api/v1/profiles')
-    access.get('/api/v1/profiles', {id: "519337b3d98ca490d1000019"}).parsed
+    access.get('/api/v1/profiles').parsed
+    access.get('/api/v1/profiles',body: {id: "519337b3d98ca490d1000019"}).parsed
 
     access.post('/api/v1/users', body: {user: {email: 'testuser@bar.com', password: '1212121'}}).parsed
     access.post('/api/v1/profiles', body: {profile: {name: 'name1', username: "username1", email: 'exampleemail@qq.com'}}).parsed
