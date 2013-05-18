@@ -91,6 +91,19 @@ read_hash = {id: "2341234", message_sequence: 1241234 }
 send_message = access.get('/api/v1/messages/read', body: read_hash ).parsed
 ```
 
+### Using Resource Owner Password Credentials flow
+
+base on [doorkeeper's wiki](https://github.com/applicake/doorkeeper/wiki/Using-Resource-Owner-Password-Credentials-flow)
+
+```shell
+app = Doorkeeper::Application.limit(1).first
+uri = URI app.redirect_uri
+uri.path = ""
+client = OAuth2::Client.new(app.uid, app.secret, :site => uri)
+access_token = client.password.get_token('user@example.com', 'doorkeeper')
+puts access_token.token
+```
+
 ### socket
 
 # TODO
