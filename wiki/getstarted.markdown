@@ -89,6 +89,7 @@ message_hash =  {
 send_message = access.get('/api/v1/messages/send_message', body: message_hash).parsed
 read_hash = {id: "2341234", message_sequence: 1241234 }
 send_message = access.get('/api/v1/messages/read', body: read_hash ).parsed
+PushUtility.push_message({message: Message.last})
 ```
 
 ### Using Resource Owner Password Credentials flow

@@ -6,9 +6,9 @@ module Messageable
 
     # two user all messages
     def self.user_session(send_user_id, target_user_id)
-      message_contents = GxMessageContent.where("$or" => [
+      message_contents = Message.where("$or" => [
                                                            {send_user_id: send_user_id, target_user_id: target_user_id, deleted: "0"},
-                                                           {send_user_id: target_user_id, target_user_id: send_user_id, deleted: "0"}
+                                                           {send_user_id: target_user_id, target_user_id: send_user_id, target_deleted: "0"}
                                                          ]
                                                 )
 
@@ -16,16 +16,22 @@ module Messageable
 
     # two user all messages
     def self.user_new_session(send_user_id, target_user_id)
-      message_contents = GxMessageContent.where("$or" => [
+      message_contents = Message.where("$or" => [
                                                            {send_user_id: send_user_id, target_user_id: target_user_id, deleted: "0", readed: "0"},
-                                                           {send_user_id: target_user_id, target_user_id: send_user_id, deleted: "0", readed: "0"}
+                                                           {send_user_id: target_user_id, target_user_id: send_user_id, target_deleted: "0", readed: "0"}
                                                          ]
                                                 )
 
     end
 
     def self.delete_session(send_user_id, target_user_id)
-      GxMessageContent.user_session({deleted:  "1"})
+      Message.where(:send_user_id => send_user_id, :target_user_id => target_user_id).update_all({:deleted => "1"})
+      Message.where(:send_user_id => target_user_id, :target_user_id => send_user_id).update_all({:target_deleted => "1"})
+    end
+
+    def self.delete_message(id ,user_id)
+      Message.where(:send_user_id => user_id, :id => id).update_all({:deleted => "1"})
+      Message.where(:id => id, :target_user_id => send_user_id).update_all({:target_deleted => "1"})
     end
 
     # return two user(send_user_id, target_user_id) session which newer(type = "1") or older(type = "0") message_sequence
@@ -33,9 +39,9 @@ module Messageable
       type ||= "0"
       message_sequence = 9999999999 if type.eql? "0" and message_sequence.to_i.eql? 0
 
-      message_contents = GxMessageContent.where("$or" => [
+      message_contents = Message.where("$or" => [
                                                            {send_user_id: send_user_id, target_user_id: target_user_id, deleted: "0"},
-                                                           {send_user_id: target_user_id, target_user_id: send_user_id, deleted: "0"}
+                                                           {send_user_id: target_user_id, target_user_id: send_user_id, target_deleted: "0"}
                                                          ]
                                                 )
 

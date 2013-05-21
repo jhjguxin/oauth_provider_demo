@@ -1,4 +1,6 @@
 class Api::V1::BaseController < ApplicationController
+  include PushUtility
+
   skip_before_filter :authenticate_user!
   skip_before_filter :verify_authenticity_token
 

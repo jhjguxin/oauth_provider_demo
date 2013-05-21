@@ -10,10 +10,13 @@ OauthProviderDemo::Application.routes.draw do
       get '/me' => "credentials#me"
       get '/fast' => 'fast#index'
 
-      match "messages/read"
       match "messages/send_message"
+      match "messages/get_session"
+      match "messages/read"
+      match "messages/receive"
+      match "messages/push_unread"
       match "messages/delete_session"
-      match "messages/deletemessage"
+      match "messages/delete_message"
     end
   end
 
