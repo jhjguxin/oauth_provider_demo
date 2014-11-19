@@ -1,0 +1,19 @@
+# config/application.yml
+#theme = %w(amelia cerulean cyborg journal readable simplex slate spacelab spruce superhero united)
+defaults: &defaults
+  app_name: "Oauth Provider Demo"
+  cool:
+    saweet: nested settings
+  theme1: 'united'
+  awesome_setting: <%= "Did you know 5 + 5 = #{5 + 5}?" %>
+  observe_models: Knowledge Note Profile Question Quiz  QuizCollection User Attachment CmsRole
+development:
+  <<: *defaults
+  neat_setting: 800
+  push_server: "http://localhost:8080"
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults
